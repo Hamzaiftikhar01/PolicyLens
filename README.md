@@ -1,5 +1,5 @@
 
-# PolicyLens - Evidence-Grounded Pakistan Legal & Document Intelligence
+# PolicyLens - ##Evidence-Grounded Pakistan Legal & Document Intelligence
 
 PolicyLens is a production-oriented **Retrieval-Augmented Generation (RAG)** system for querying legal, regulatory, and user-provided documents. It retrieves relevant evidence, generates answers from that evidence, and exposes source metadata for verification.
 
