@@ -1,0 +1,182 @@
+[
+  {
+    "id": 1,
+    "question": "What does Article 25 of the Constitution of Pakistan state regarding equality of citizens?",
+    "expected_answer": "All citizens are equal before law and are entitled to equal protection of law. There shall be no discrimination on the basis of sex alone. Nothing in this Article shall prevent the State from making any special provision for the protection of women and children.",
+    "expected_documents": ["constitution"],
+    "expected_sections": ["Article 25"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 2,
+    "question": "What is the definition of the State under Article 7 of the Constitution of Pakistan?",
+    "expected_answer": "The State means the Federal Government, Parliament, a Provincial Government, a Provincial Assembly, and such local or other authorities in Pakistan as are by law empowered to impose any tax or cess.",
+    "expected_documents": ["constitution"],
+    "expected_sections": ["Article 7"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 3,
+    "question": "What is the punishment for theft under Section 379 of the Pakistan Penal Code?",
+    "expected_answer": "Whoever commits theft shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+    "expected_documents": ["ppc"],
+    "expected_sections": ["Section 379"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 4,
+    "question": "What are the powers of a police officer to arrest a person without a warrant under Section 54 of the Code of Criminal Procedure?",
+    "expected_answer": "Section 54 outlines situations where a police officer may arrest without a warrant, including when a person is concerned in a cognizable offence, has reasonable complaint or suspicion, possesses housebreaking implements, is a proclaimed offender, or is in possession of suspected stolen property.",
+    "expected_documents": ["crpc"],
+    "expected_sections": ["Section 54"],
+    "question_type": "Direct Factual",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 5,
+    "question": "What is the principle of Res Judicata under Section 11 of the Code of Civil Procedure?",
+    "expected_answer": "No Court shall try any suit or issue in which the matter directly and substantially in issue has been directly and substantially in issue in a former suit between the same parties, or between parties under whom they or any of them claim, litigating under the same title, in a Court competent to try such subsequent suit.",
+    "expected_documents": ["cpc"],
+    "expected_sections": ["Section 11"],
+    "question_type": "Direct Factual",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 6,
+    "question": "What are the fundamental rights regarding security of person and fair trial under the Constitution?",
+    "expected_answer": "Under Article 9, no person shall be deprived of life or liberty save in accordance with law. Under Article 10A, for the determination of civil rights and obligations or in any criminal charge, a person shall be entitled to a fair trial and due process.",
+    "expected_documents": ["constitution"],
+    "expected_sections": ["Article 9", "Article 10A"],
+    "question_type": "Multi-section",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 7,
+    "question": "What is the procedure for recording a First Information Report (FIR) under Section 154 of the CrPC?",
+    "expected_answer": "Every information relating to the commission of a cognizable offence given to an officer in charge of a police station shall be reduced to writing by him or under his direction, and be read over to the informant. It must be signed by the person giving it, and the substance thereof entered in a book.",
+    "expected_documents": ["crpc"],
+    "expected_sections": ["Section 154"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 8,
+    "question": "How are fundamental rights under Article 19 (Freedom of Speech) and Article 19A (Right to Information) connected in the Constitution?",
+    "expected_answer": "Article 19 guarantees the right to freedom of speech and expression, subject to reasonable restrictions. Article 19A provides that every citizen shall have the right to have access to information in all matters of public importance, subject to regulation and reasonable restrictions imposed by law.",
+    "expected_documents": ["constitution"],
+    "expected_sections": ["Article 19", "Article 19A"],
+    "question_type": "Multi-section",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 9,
+    "question": "What categories of information are exempted from disclosure under Section 7 of the Right of Access to Information Act, 2017?",
+    "expected_answer": "Section 7 exempts information that would cause damage to national security, international relations, defense, public order, commercial interests of third parties, law enforcement, or private personal data unless the public interest outweighs the harm.",
+    "expected_documents": ["rai_act"],
+    "expected_sections": ["Section 7"],
+    "question_type": "Direct Factual",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 10,
+    "question": "What constitutes criminal access to an information system or data under PECA 2016, and what is its punishment?",
+    "expected_answer": "Unauthorized access to any information system or data constitutes an offense. Under Section 3 (Unauthorized access to information system or data), the punishment is imprisonment for a term which may extend to three months or with fine which may extend to fifty thousand rupees, or with both.",
+    "expected_documents": ["peca"],
+    "expected_sections": ["Section 3"],
+    "question_type": "Direct Factual",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 11,
+    "question": "What is the penalty for cyber terrorism under PECA 2016?",
+    "expected_answer": "Under Section 10 of PECA, cyber terrorism (accessing an information system to commit acts of terror, cause harm, or threaten national security) is punishable with imprisonment for a term which may extend to fourteen years or with fine which may extend to ten million rupees, or with both.",
+    "expected_documents": ["peca"],
+    "expected_sections": ["Section 10"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 12,
+    "question": "What does the Elections Act 2017 say about the participation of women in elections, and how does it align with the Constitution?",
+    "expected_answer": "The Elections Act 2017, in Section 9 and Section 206, mandates a minimum 10% turnout of women voters for an election to be valid and requires political parties to allocate at least 5% of general seat tickets to women candidates. This aligns with Article 25 of the Constitution (equality and protection of women) and Article 34 (full participation of women in national life).",
+    "expected_documents": ["elections_act", "constitution"],
+    "expected_sections": ["Section 9", "Section 206", "Article 25", "Article 34"],
+    "question_type": "Multi-document",
+    "difficulty": "Hard"
+  },
+  {
+    "id": 13,
+    "question": "What are the rules regarding the disqualification of a member of Parliament under the Constitution and the Elections Act 2017?",
+    "expected_answer": "Disqualifications are primarily governed by Article 63 of the Constitution (e.g. unsound mind, undischarged insolvent, foreign citizenship, working against integrity of Pakistan). The Elections Act 2017 reinforces these rules and outlines the procedural mechanism for referring disqualification cases to the Election Commission under Section 232.",
+    "expected_documents": ["constitution", "elections_act"],
+    "expected_sections": ["Article 63", "Section 232"],
+    "question_type": "Multi-document",
+    "difficulty": "Hard"
+  },
+  {
+    "id": 14,
+    "question": "Under the Right of Access to Information Act 2017, what is the deadline for a public body to respond to an information request?",
+    "expected_answer": "Under Section 14, a public body must respond to an information request within ten working days, which can be extended by another ten working days under special circumstances if written reasons are provided to the applicant.",
+    "expected_documents": ["rai_act"],
+    "expected_sections": ["Section 14"],
+    "question_type": "Direct Factual",
+    "difficulty": "Easy"
+  },
+  {
+    "id": 15,
+    "question": "How do the definitions of public body differ between the Right of Access to Information Act 2017 and the Constitution?",
+    "expected_answer": "Under Section 2(h) of the RAI Act 2017, 'public body' includes federal ministries, departments, offices of the Senate/National Assembly, courts, and entities receiving federal funding. The Constitution defines 'the State' under Article 7 more broadly to include any local authority empowered by law to impose taxes, but does not use the specific phrase 'public body' in the same administrative sense.",
+    "expected_documents": ["rai_act", "constitution"],
+    "expected_sections": ["Section 2", "Article 7"],
+    "question_type": "Comparative",
+    "difficulty": "Hard"
+  },
+  {
+    "id": 16,
+    "question": "Compare the jurisdiction and procedure for defamation between the Pakistan Penal Code (PPC) and PECA.",
+    "expected_answer": "Under Section 499 and 500 of the PPC, defamation is a general criminal offense punishable by up to two years' imprisonment, fine, or both. Section 20 of PECA specifically criminalizes online defamation (injury to reputation through information systems) and is punishable by up to three years' imprisonment, a fine of up to one million rupees, or both. PECA cases are tried by designated cybercrime courts.",
+    "expected_documents": ["ppc", "peca"],
+    "expected_sections": ["Section 500", "Section 20"],
+    "question_type": "Comparative",
+    "difficulty": "Hard"
+  },
+  {
+    "id": 17,
+    "question": "How are civil servants appointed and what is their tenure under the Civil Servants Act, 1973?",
+    "expected_answer": "Under Section 5 of the Civil Servants Act, appointments are made in the prescribed manner by the President or authorized persons. Under Section 11, services can be terminated on notice, or if a post is abolished. Rules on probation and confirmation are defined under Section 6 and 7.",
+    "expected_documents": ["civil_servants_act"],
+    "expected_sections": ["Section 5", "Section 11"],
+    "question_type": "Direct Factual",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 18,
+    "question": "Compare the grounds for termination of a civil servant under the Civil Servants Act 1973 with the protection of service in the Constitution.",
+    "expected_answer": "Section 11 of the Civil Servants Act 1973 allows termination during probation or on abolition of post. The Constitution, under Article 240, provides that the terms and conditions of service shall be determined by Act of Parliament, but does not guarantee absolute tenure, delegating details to civil service statutes like the 1973 Act.",
+    "expected_documents": ["civil_servants_act", "constitution"],
+    "expected_sections": ["Section 11", "Article 240"],
+    "question_type": "Comparative",
+    "difficulty": "Hard"
+  },
+  {
+    "id": 19,
+    "question": "What is the tax rate on import of luxury electric vehicles for the current fiscal year under the Constitution of Pakistan?",
+    "expected_answer": "The Constitution of Pakistan outlines the distribution of legislative powers and tax-levying authorities (e.g., Federal Legislative List in Article 77/Fourth Schedule), but does not specify actual tax rates or customs tariffs for specific goods like luxury electric vehicles. This information must be obtained from the annual Finance Act or customs notifications.",
+    "expected_documents": ["constitution"],
+    "expected_sections": [],
+    "question_type": "Unanswerable",
+    "difficulty": "Medium"
+  },
+  {
+    "id": 20,
+    "question": "Under the Pakistan Penal Code, what is the registration fee for a commercial drone weight class over 5kg?",
+    "expected_answer": "The Pakistan Penal Code (1860) defines criminal offenses and their punishments (such as theft, murder, trespass), but does not contain provisions or regulations regarding civil administrative procedures like the registration fees of drones or unmanned aerial vehicles, which fall under civil aviation authority regulations.",
+    "expected_documents": ["ppc"],
+    "expected_sections": [],
+    "question_type": "Unanswerable",
+    "difficulty": "Medium"
+  }
+]

@@ -1,0 +1,90 @@
+[
+  {
+    "document_id": "constitution",
+    "title": "Constitution of the Islamic Republic of Pakistan",
+    "source": "National Assembly of Pakistan",
+    "source_url": "https://na.gov.pk/uploads/documents/1333524740_370.pdf",
+    "category": "Constitutional",
+    "date": "1973-04-12",
+    "version": "Amended up to 2024",
+    "status": "Active",
+    "filename": "constitution.pdf"
+  },
+  {
+    "document_id": "ppc",
+    "title": "Pakistan Penal Code, 1860",
+    "source": "Ministry of Law and Justice, Pakistan",
+    "source_url": "http://pakistancode.gov.pk/english/UY2Fjo2LEyqpLWY2Mjk5MDc=-kyxlbxlx-ppc",
+    "category": "Criminal Law",
+    "date": "1860-10-06",
+    "version": "Amended up to 2023",
+    "status": "Active",
+    "filename": "pakistan_penal_code.pdf"
+  },
+  {
+    "document_id": "crpc",
+    "title": "Code of Criminal Procedure, 1898",
+    "source": "Ministry of Law and Justice, Pakistan",
+    "source_url": "http://pakistancode.gov.pk/english/UY2Fjo2LEyqpLWY2Mjk5MDc=-kyxlbxlx-crpc",
+    "category": "Criminal Procedure",
+    "date": "1898-03-22",
+    "version": "Amended up to 2023",
+    "status": "Active",
+    "filename": "code_of_criminal_procedure.pdf"
+  },
+  {
+    "document_id": "cpc",
+    "title": "Code of Civil Procedure, 1908",
+    "source": "Ministry of Law and Justice, Pakistan",
+    "source_url": "http://pakistancode.gov.pk/english/UY2Fjo2LEyqpLWY2Mjk5MDc=-kyxlbxlx-cpc",
+    "category": "Civil Procedure",
+    "date": "1908-03-21",
+    "version": "Amended up to 2023",
+    "status": "Active",
+    "filename": "code_of_civil_procedure.pdf"
+  },
+  {
+    "document_id": "elections_act",
+    "title": "Elections Act, 2017",
+    "source": "National Assembly of Pakistan",
+    "source_url": "https://na.gov.pk/uploads/documents/1507727142_915.pdf",
+    "category": "Election Law",
+    "date": "2017-10-02",
+    "version": "Amended up to 2024",
+    "status": "Active",
+    "filename": "elections_act_2017.pdf"
+  },
+  {
+    "document_id": "peca",
+    "title": "Prevention of Electronic Crimes Act (PECA), 2016",
+    "source": "National Assembly of Pakistan",
+    "source_url": "https://na.gov.pk/uploads/documents/1472635250_246.pdf",
+    "category": "Cyber Law",
+    "date": "2016-08-19",
+    "version": "Under Review",
+    "status": "Under Review",
+    "filename": "prevention_of_electronic_crimes_act.pdf"
+  },
+  {
+    "document_id": "rai_act",
+    "title": "Right of Access to Information Act, 2017",
+    "source": "National Assembly of Pakistan",
+    "source_url": "https://na.gov.pk/uploads/documents/1508233377_122.pdf",
+    "category": "Administrative Law",
+    "date": "2017-10-16",
+    "version": "Active",
+    "status": "Active",
+    "filename": "right_of_access_to_information_act.pdf"
+  },
+  {
+    "document_id": "civil_servants_act",
+    "title": "Civil Servants Act, 1973",
+    "source": "National Assembly of Pakistan",
+    "source_url": "http://na.gov.pk/uploads/documents/1498115655_160.pdf",
+    "category": "Service Law",
+    "date": "1973-09-26",
+    "version": "Active",
+    "status": "Active",
+    "filename": "civil_servants_act_1973.pdf"
+  }
+]

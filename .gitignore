@@ -1,0 +1,27 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environments
+.env
+.venv
+venv/
+env/
+ENV/
+
+# Pytest / Cache
+.pytest_cache/
+.pytest/
+
+# FAISS Local Database & Session Uploads
+data/vector_stores/
+sessions/
+scratch/
+
+# IDE / System
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

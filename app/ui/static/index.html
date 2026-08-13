@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PolicyLens — Evidence-Grounded Document Intelligence</title>
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css?v=3.0.0">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Collapsible Sidebar -->
+        <aside class="sidebar" id="app-sidebar">
+            <div class="sidebar-header">
+                <div class="brand">
+                    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Document/Policy Shape -->
+                        <path d="M4 4C4 2.89543 4.89543 2 6 2H14L20 8V20C20 21.1046 19.1046 22 18 22H6C4.89543 22 4 21.1046 4 20V4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <!-- Text Lines inside Document -->
+                        <path d="M8 7H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 11H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M8 15H11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <!-- Lens (focus magnifying glass) -->
+                        <circle cx="15" cy="15" r="3.5" stroke="currentColor" stroke-width="2" fill="var(--bg-secondary)"/>
+                        <path d="M17.5 17.5L21.5 21.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div class="brand-text">
+                        <h1>POLICYLENS</h1>
+                    </div>
+                </div>
+                <button class="mobile-toggle-btn" id="sidebar-close-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-view="dashboard">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#benchmark" class="nav-item" data-view="benchmark">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Benchmark Mode</span>
+                </a>
+                <a href="#try-your-own" class="nav-item" data-view="try-your-own">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    <span>Try Your Own</span>
+                </a>
+                <a href="#documents" class="nav-item" data-view="documents">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Documents</span>
+                </a>
+                <a href="#evaluation" class="nav-item" data-view="evaluation">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Evaluation</span>
+                </a>
+                <a href="#settings" class="nav-item" data-view="settings">
+                    <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="status-indicator">
+                    <span class="status-dot green" id="status-dot"></span>
+                    <span class="status-text" id="status-text">Corpus: Offline</span>
+                </div>
+                <div class="disclaimer-mini">
+                    AI results require verification.
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="main-layout">
+            <header class="top-bar">
+                <button class="mobile-toggle-btn" id="sidebar-open-btn">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+                <div class="top-bar-title" id="page-title">Dashboard</div>
+                <div class="session-badge" id="session-display">Session: None</div>
+            </header>
+
+            <main class="content-body">
+                <!-- VIEW 1: DASHBOARD -->
+                <section id="view-dashboard" class="view-section active">
+                    <div class="welcome-banner">
+                        <h2>Welcome to PolicyLens</h2>
+                        <p>Evidence-grounded intelligence for legal, regulatory, and policy documents in Pakistan. Explore the authoritative benchmark corpus or upload your own files to start.</p>
+                    </div>
+
+                    <!-- Statistics Cards Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <span class="stat-label">Benchmark Documents</span>
+                            <span class="stat-value" id="stat-docs">8</span>
+                            <span class="stat-desc">Authoritative Legal Acts</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Indexed Chunks</span>
+                            <span class="stat-value" id="stat-chunks">0</span>
+                            <span class="stat-desc">FAISS Vectors</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Benchmark Cases</span>
+                            <span class="stat-value" id="stat-cases">20</span>
+                            <span class="stat-desc">Golden Reference Cases</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Retrieval Hit@5</span>
+                            <span class="stat-value" id="stat-hit">--</span>
+                            <span class="stat-desc">Harness Precision</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Groundedness Score</span>
+                            <span class="stat-value" id="stat-groundedness">--</span>
+                            <span class="stat-desc">Zero Hallucinations</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-label">Average Latency</span>
+                            <span class="stat-value" id="stat-latency">--</span>
+                            <span class="stat-desc">Execution Speed</span>
+                        </div>
+                    </div>
+
+                    <!-- Mode Cards -->
+                    <div class="section-title">Select Mode</div>
+                    <div class="modes-grid">
+                        <div class="mode-card" data-target="benchmark">
+                            <div class="mode-icon">
+                                <svg viewBox="0 0 24 24" width="32" height="32" stroke="currentColor" stroke-width="1.5" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            </div>
+                            <h3>Benchmark Mode</h3>
+                            <p>Query the pre-indexed Pakistan Legal & Policy corpus. Fully frozen and validated against 20 evaluation test cases.</p>
+                            <span class="mode-link">Launch Workspace →</span>
+                        </div>
+                        <div class="mode-card" data-target="try-your-own">
+                            <div class="mode-icon">
+                                <svg viewBox="0 0 24 24" width="32" height="32" stroke="#4C8DFF" stroke-width="1.5" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                            </div>
+                            <h3>Try Your Own</h3>
+                            <p>Upload your own PDFs (Employee Handbooks, Regulations, Reports) to create a isolated temporary session index.</p>
+                            <span class="mode-link font-blue">Upload & Query →</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 2: BENCHMARK MODE (Q&A) -->
+                <section id="view-benchmark" class="view-section">
+                    <div class="workspace-header">
+                        <div>
+                            <h2>Benchmark Workspace</h2>
+                            <p class="subtitle text-green">Connected: Pakistan Legal & Policy Corpus (Frozen)</p>
+                        </div>
+                        <div class="workspace-actions">
+                            <button class="btn btn-outline" id="suggest-q-btn">Suggest Question</button>
+                        </div>
+                    </div>
+
+                    <div class="workspace-layout">
+                        <!-- Chat Input Box -->
+                        <div class="query-box-card">
+                            <div class="query-input-wrapper">
+                                <textarea id="query-input" placeholder="Ask a question about the Constitution, PPC, PECA or RAI Acts... (e.g. 'What fundamental rights are protected under Article 25?')"></textarea>
+                                <div class="query-actions">
+                                    <div class="settings-summary">
+                                        <span id="settings-summary-text">LLM: Gemini-1.5-Flash | Top K: 5</span>
+                                    </div>
+                                    <button class="btn btn-primary" id="ask-btn">
+                                        <span>Ask PolicyLens</span>
+                                        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Real-time Processing Logs -->
+                        <div class="processing-log-card hidden" id="pipeline-status-card">
+                            <h4>Pipeline Operations</h4>
+                            <div class="log-steps">
+                                <div class="log-step" id="step-init">
+                                    <span class="step-bullet"></span>
+                                    <span class="step-label">Initializing clients...</span>
+                                    <span class="step-time">--</span>
+                                </div>
+                                <div class="log-step" id="step-embed">
+                                    <span class="step-bullet"></span>
+                                    <span class="step-label">Embedding query vector...</span>
+                                    <span class="step-time">--</span>
+                                </div>
+                                <div class="log-step" id="step-retrieval">
+                                    <span class="step-bullet"></span>
+                                    <span class="step-label">Searching evidence spaces...</span>
+                                    <span class="step-time">--</span>
+                                </div>
+                                <div class="log-step" id="step-llm">
+                                    <span class="step-bullet"></span>
+                                    <span class="step-label">Generating grounded answer...</span>
+                                    <span class="step-time">--</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Answer & Sources Panel -->
+                        <div class="answer-container hidden" id="answer-container">
+                            <div class="answer-header">
+                                <h3>ANSWER</h3>
+                                <div class="evidence-badge" id="evidence-status-badge">
+                                    <span id="evidence-status-label">Strong Evidence</span>
+                                </div>
+                            </div>
+
+                            <div class="answer-body markdown-content" id="answer-text">
+                                <!-- Dynamic Answer Content -->
+                            </div>
+
+                            <div class="conflict-banner hidden" id="conflict-warning">
+                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span>Potentially conflicting provisions detected across retrieved evidence. Inspect cited documents.</span>
+                            </div>
+
+                            <div class="answer-meta">
+                                <span id="meta-latency">Latency: 0.00s</span>
+                                <span id="meta-cost">Cost: $0.000000</span>
+                            </div>
+
+                            <div class="citations-section">
+                                <h4>CITED EVIDENCE</h4>
+                                <div class="citations-list" id="citations-grid">
+                                    <!-- Dynamic Citations List -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 3: TRY YOUR OWN MODE -->
+                <section id="view-try-your-own" class="view-section">
+                    <div class="workspace-header">
+                        <div>
+                            <h2>Try Your Own Mode</h2>
+                            <p class="subtitle text-blue">Isolated Session Space (Temporary Document-specific RAG)</p>
+                        </div>
+                        <div class="workspace-actions">
+                            <button class="btn btn-danger" id="clear-session-btn">Clear Session Documents</button>
+                        </div>
+                    </div>
+
+                    <div class="try-your-own-layout">
+                        <!-- Left Panel: Uploader & Files -->
+                        <div class="upload-sidebar">
+                            <div class="upload-card">
+                                <h4>Upload PDFs</h4>
+                                <p class="desc">Select one or more PDF files. Maximum size: 20MB.</p>
+                                
+                                <div class="drop-zone" id="upload-dropzone">
+                                    <svg viewBox="0 0 24 24" width="36" height="36" stroke="#697586" stroke-width="1.5" fill="none"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                    <p>Drag & drop PDFs here or <span class="browse-link">Browse</span></p>
+                                    <input type="file" id="upload-file-input" multiple accept=".pdf" class="hidden">
+                                </div>
+
+                                <div class="upload-progress-container hidden" id="upload-progress-box">
+                                    <div class="upload-filename" id="upload-filename-text">document.pdf</div>
+                                    <div class="progress-bar-wrapper">
+                                        <div class="progress-bar-fill" id="upload-progress-fill"></div>
+                                    </div>
+                                    <div class="progress-steps" id="upload-progress-steps">
+                                        <span class="active">Uploading</span> → <span>Extracting</span> → <span>Indexing</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="session-docs-card">
+                                <h4>Session Catalog</h4>
+                                <div class="session-docs-list" id="session-docs-list">
+                                    <div class="empty-state">No custom files uploaded yet.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Chat Interface -->
+                        <div class="upload-chat-workspace">
+                            <!-- Inactive Upload state placeholder -->
+                            <div class="upload-inactive-state" id="upload-chat-placeholder">
+                                <svg viewBox="0 0 24 24" width="48" height="48" stroke="#252D36" stroke-width="1.5" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                <h3>Chat Inactive</h3>
+                                <p>Upload one or more PDFs to index them. Once ready, you can query your session files here with full citations.</p>
+                            </div>
+                            <!-- Active Chat workspace -->
+                            <div class="chat-workspace-active hidden" id="upload-chat-active">
+                                <div class="query-box-card">
+                                    <div class="query-input-wrapper">
+                                        <textarea id="try-query-input" placeholder="Ask a question about your uploaded documents..."></textarea>
+                                        <div class="query-actions">
+                                            <div class="settings-summary">
+                                                <span id="try-settings-summary-text">LLM: Gemini-flash-latest</span>
+                                            </div>
+                                            <button class="btn btn-primary bg-blue" id="try-ask-btn">
+                                                <span>Query Documents</span>
+                                                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pipeline Ops -->
+                                <div class="processing-log-card hidden" id="try-pipeline-status-card">
+                                    <h4>Pipeline Operations</h4>
+                                    <div class="log-steps" id="try-log-steps">
+                                        <!-- Shared Steps -->
+                                    </div>
+                                </div>
+
+                                <!-- Response Card -->
+                                <div class="answer-container hidden" id="try-answer-container">
+                                    <div class="answer-header">
+                                        <h3>ANSWER</h3>
+                                        <div class="evidence-badge" id="try-evidence-status-badge">
+                                            <span id="try-evidence-status-label">Strong Evidence</span>
+                                        </div>
+                                    </div>
+                                    <div class="answer-body markdown-content" id="try-answer-text"></div>
+                                    <div class="answer-meta">
+                                        <span id="try-meta-latency">Latency: 0.00s</span>
+                                        <span id="try-meta-cost">Cost: $0.000000</span>
+                                    </div>
+                                    <div class="citations-section">
+                                        <h4>CITED EVIDENCE</h4>
+                                        <div class="citations-list" id="try-citations-grid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 4: DOCUMENT LIBRARY -->
+                <section id="view-documents" class="view-section">
+                    <div class="doc-library-controls">
+                        <h3>Knowledge Repository</h3>
+                        <p class="desc">A curated list of all legislation in Benchmark Mode and loaded user session files.</p>
+                    </div>
+
+                    <div class="table-container">
+                        <table class="responsive-table">
+                            <thead>
+                                <tr>
+                                    <th>Document Title</th>
+                                    <th>Category</th>
+                                    <th>Source Agency</th>
+                                    <th>Pages</th>
+                                    <th>Chunks</th>
+                                    <th>Status / Version</th>
+                                    <th>Scope</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="library-table-body">
+                                <!-- Dynamic Document list -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- VIEW 5: EVALUATION -->
+                <section id="view-evaluation" class="view-section">
+                    <div class="eval-controls-card">
+                        <div class="eval-controls-header">
+                            <div>
+                                <h2>Evaluation Console</h2>
+                                <p class="desc">Execute a automated RAG assessment against the frozen Pakistan Legal benchmark corpus (20 Cases).</p>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" id="run-eval-btn">Run Harness Evaluation</button>
+                            </div>
+                        </div>
+
+                        <div class="eval-progress hidden" id="eval-progress-box">
+                            <div class="progress-status-row">
+                                <span class="spinner-icon"></span>
+                                <span id="eval-progress-text">Executing evaluation pipeline. This may take 1-2 minutes...</span>
+                            </div>
+                        </div>
+                        
+                        <div class="error-banner hidden" id="eval-error-banner"></div>
+                    </div>
+
+                    <!-- Not run placeholder -->
+                    <div class="eval-empty-placeholder" id="eval-placeholder">
+                        <svg viewBox="0 0 24 24" width="48" height="48" stroke="#252D36" stroke-width="1.5" fill="none"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        <h3>Evaluation Results Pending</h3>
+                        <p>No evaluation report is present. Click 'Run Harness Evaluation' above to calculate Hit@K, Groundedness, Citation Accuracy, Latencies, and Costs.</p>
+                    </div>
+
+                    <!-- Results Dashboard active -->
+                    <div class="eval-results-dashboard hidden" id="eval-dashboard-active">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <span class="stat-label">Harness Questions</span>
+                                <span class="stat-value" id="eval-stat-count">20</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Retrieval Hit@5</span>
+                                <span class="stat-value text-green" id="eval-stat-hit">0.0%</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Groundedness</span>
+                                <span class="stat-value text-green" id="eval-stat-ground">0.0%</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Citation Accuracy</span>
+                                <span class="stat-value text-blue" id="eval-stat-cit">0.0%</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Answer Relevance</span>
+                                <span class="stat-value text-blue" id="eval-stat-rel">0.0%</span>
+                            </div>
+                            <div class="stat-card">
+                                <span class="stat-label">Mean Latency</span>
+                                <span class="stat-value" id="eval-stat-latency">0.00s</span>
+                            </div>
+                        </div>
+
+                        <!-- Tab structure for Markdown Report vs Detailed Table vs Failure Analysis -->
+                        <div class="eval-tabs">
+                            <button class="eval-tab active" data-target="eval-tab-report">Performance Report</button>
+                            <button class="eval-tab" data-target="eval-tab-table">Case Details</button>
+                            <button class="eval-tab" data-target="eval-tab-failures">Failure Analysis</button>
+                        </div>
+
+                        <div class="eval-tab-content active" id="eval-tab-report">
+                            <div class="markdown-content card-bg" id="eval-report-markdown"></div>
+                        </div>
+
+                        <div class="eval-tab-content" id="eval-tab-table">
+                            <div class="table-container card-bg">
+                                <table class="responsive-table small-text">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Question</th>
+                                            <th>Type</th>
+                                            <th>Hit@5</th>
+                                            <th>Grounded</th>
+                                            <th>Citation</th>
+                                            <th>Latency</th>
+                                            <th>Cost</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="eval-table-body">
+                                        <!-- Cases rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="eval-tab-content" id="eval-tab-failures">
+                            <div class="markdown-content card-bg" id="eval-failures-markdown"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VIEW 6: SETTINGS -->
+                <section id="view-settings" class="view-section">
+                    <div class="settings-layout card-bg">
+                        <h3>System Configuration</h3>
+                        <p class="desc">Configure model providers, API credentials, and recursive chunking windows.</p>
+                        <hr class="border-line">
+
+                        <form id="settings-form" class="settings-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="set-emb-provider">Embedding Model Provider</label>
+                                    <select id="set-emb-provider">
+                                        <option value="gemini">Google Gemini (text-embedding-004)</option>
+                                        <option value="openai">OpenAI (text-embedding-3-small)</option>
+                                        <option value="local">Local Feature Hashing (Offline Fallback)</option>
+                                    </select>
+                                    <span class="field-info">Local Feature Hashing enables vector operations without internet/keys.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="set-llm-provider">LLM Generation Provider</label>
+                                    <select id="set-llm-provider">
+                                        <option value="gemini">Google Gemini (gemini-1.5-flash)</option>
+                                        <option value="openai">OpenAI (gpt-4o-mini)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="set-gemini-key">Gemini API Key</label>
+                                    <input type="password" id="set-gemini-key" placeholder="Enter Gemini API key (e.g. AIzaSy...)">
+                                    <span class="field-info" id="gemini-key-status">Key not configured.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="set-openai-key">OpenAI API Key</label>
+                                    <input type="password" id="set-openai-key" placeholder="Enter OpenAI API key (e.g. sk-...)">
+                                    <span class="field-info" id="openai-key-status">Key not configured.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="set-chunk-size">Recursive Chunk Size</label>
+                                    <input type="number" id="set-chunk-size" min="100" max="5000" step="100">
+                                    <span class="field-info">Maximum character size per text segment.</span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="set-chunk-overlap">Recursive Chunk Overlap</label>
+                                    <input type="number" id="set-chunk-overlap" min="0" max="2000" step="50">
+                                    <span class="field-info">Overlap characters carried between segments.</span>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Save Settings</button>
+                                <span class="save-status" id="save-status-msg"></span>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <!-- Sliding Drawer Panel for Source Evidence -->
+    <div class="drawer-overlay" id="drawer-overlay"></div>
+    <div class="drawer" id="evidence-drawer">
+        <div class="drawer-header">
+            <h3>SOURCE EVIDENCE</h3>
+            <button class="close-drawer-btn" id="drawer-close-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+        </div>
+        <div class="drawer-body">
+            <div class="drawer-meta-section">
+                <div class="meta-item">
+                    <span class="lbl">Document</span>
+                    <span class="val" id="drawer-doc">Constitution of Pakistan</span>
+                </div>
+                <div class="meta-item">
+                    <span class="lbl">Section / Provision</span>
+                    <span class="val" id="drawer-section">Article 25</span>
+                </div>
+                <div class="meta-item">
+                    <span class="lbl">Page Number</span>
+                    <span class="val" id="drawer-page">Page 18</span>
+                </div>
+            </div>
+            <div class="drawer-text-section">
+                <h4>Supporting Text Passage</h4>
+                <div class="passage-box" id="drawer-text">
+                    All citizens are equal before law and are entitled to equal protection of law. There shall be no discrimination on the basis of sex alone.
+                </div>
+            </div>
+            <div class="drawer-raw-metadata">
+                <h4>Technical Metadata</h4>
+                <pre class="json-code" id="drawer-metadata">{}</pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Markdowns rendering helper (marked.js fallback or basic parser in JS) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/js/app.js?v=3.1.0"></script>
+</body>
+</html>
