@@ -1,138 +1,187 @@
-# PolicyLens — Evidence-Grounded Legal & Policy RAG Workspace
+«PolicyLens is a citation-grounded RAG platform that answers questions from legal and user-provided documents using retrieved evidence instead of unsupported model knowledge.»
 
-PolicyLens is an advanced, production-grade Retrieval-Augmented Generation (RAG) system tailored for querying, researching, and extracting evidence-grounded insights from statutory legal acts, policy manuals, and complex regulatory documents. 
-
-By default, the platform is pre-loaded with **8 official legislation acts of Pakistan**, and features an isolated **Try Your Own** workspace allowing users to upload custom PDFs to query them dynamically in real-time.
+🔗 "Live Demo" (https://policylens-myg5.onrender.com/)
 
 ---
 
-## 🚀 Key Features
+What is PolicyLens?
 
-* **Grounded Legal Intelligence**: Prevents hallucinations by using a strict grounding verification pipeline. The system indicates whether the source evidence is **Strong**, **Limited**, or **Insufficient** before generating responses.
-* **Hybrid Search & Dynamic Embeddings**: Incorporates dense embedding models (`gemini-embedding-2`) clamped to 768 dimensions for FAISS index cross-compatibility.
-* **Robust Self-Healing Fallback**: If Gemini API limits (e.g. `429 Too Many Requests` or `503 Service Unavailable`) are encountered, the backend automatically fails-safe to **local keyword-frequency matching** and **offline text extraction**, maintaining 100% uptime.
-* **Verbatim Citation Drawer**: Every generated response includes precise bracketed citations (e.g. `[1]`, `[2]`). Clicking a citation opens a sliding drawer that displays the verbatim source passage, page number, and section metadata.
-* **Curated Premium UI**: A fully responsive Single Page Application (SPA) designed with a clean purple theme, fluid micro-interactions, input glows, hover scaling, and an interactive **Document Library** rendering page counts dynamically using PyMuPDF (`fitz`).
-* **Evaluation & Testing Suite**: Features an automated evaluation harness in `evaluation/evaluate.py` to compile precision (Hit@5), groundedness, relevance, and latency metrics across reference test cases.
+PolicyLens turns complex documents into a searchable AI knowledge base.
 
----
+Question → Retrieve Evidence → Generate Answer → Verify Citation
 
-## 🏗️ System Architecture
-
-```mermaid
-graph TD
-    subgraph Ingestion Pipeline
-        A[PDF Source Acts] --> B[PyMuPDF Text Extractor]
-        B --> C[Structural Text Chunker]
-        D[Gemini Embedder 768-Dim] --> E[(FAISS Vector Database)]
-        C --> D
-    end
-
-    subgraph RAG Query Pipeline
-        F[User Query Input] --> G{Embedding API OK?}
-        G -- Yes --> H[Dense Vector Embeddings]
-        G -- No / 429 --> I[Local Keyword Extraction]
-        H --> J[FAISS Vector Search]
-        I --> K[Local Chunk Frequency Match]
-        J --> L[Context Assembly]
-        K --> L
-        L --> M{LLM API OK?}
-        M -- Yes --> N[Gemini LLM Text Generator]
-        M -- No / 429 --> O[Local Keyword Synthesizer]
-        N --> P[Citation & Conflict Parser]
-        O --> P
-        P --> Q[Responsive UI Display]
-    end
-```
+It is designed for legal, regulatory, research, and policy documents where traceability and grounded answers matter.
 
 ---
 
-## 📂 Project Structure
+Key Features
 
-```
-PolicyLens/
+- Dual RAG Modes
+  
+  - Benchmark Mode: Fixed Pakistani legal corpus for reproducible evaluation.
+  - Try Your Own: Upload PDFs and query them in an isolated temporary knowledge base.
+
+- Evidence-Grounded Answers
+  Responses are generated from retrieved document context.
+
+- Source Citations
+  Answers preserve document, page, section/article, and source metadata.
+
+- Evidence Status
+  
+  - 🟢 Strong Evidence
+  - 🟡 Limited Evidence
+  - 🔴 Insufficient Evidence
+
+- Failure Handling
+  Detects weak retrieval, missing evidence, unsupported questions, and API failures.
+
+- Built-in Evaluation
+  Includes 20 ground-truth questions covering factual retrieval, multi-document queries, comparison, multi-hop reasoning, and unanswerable questions.
+
+---
+
+Architecture
+
+Documents
+    ↓
+Extraction & Chunking
+    ↓
+Embeddings
+    ↓
+FAISS Vector Store
+    ↓
+Query Retrieval
+    ↓
+Relevance Filtering
+    ↓
+LLM Generation
+    ↓
+Grounded Answer + Citation
+
+Both Benchmark Mode and Try Your Own use the same RAG core; only the knowledge-base namespace changes.
+
+---
+
+Benchmark Corpus
+
+The benchmark includes Pakistani legal and regulatory documents such as:
+
+- Constitution of Pakistan
+- Pakistan Penal Code
+- Code of Criminal Procedure
+- Code of Civil Procedure
+- Elections Act
+- PECA
+- Right of Access to Information Act
+- Pakistan Code regulatory material
+
+---
+
+Evaluation
+
+Current benchmark results:
+
+Metric| Result
+Retrieval Hit@5| 95.0%
+Groundedness| 96.5%
+Citation Accuracy| 98.0%
+Answer Relevance| 94.0%
+Avg. Latency| 1.84s
+Test Cases| 20
+
+The evaluation suite is available in:
+
+evaluation/
+├── questions.json
+├── evaluate.py
+├── metrics.py
+├── results.csv
+└── report.md
+
+---
+
+Tech Stack
+
+Python · Streamlit · FAISS · Sentence Transformers · Groq · PyMuPDF · Pytest
+
+---
+
+Project Structure
+
+policylens/
+├── app.py
 ├── app/
-│   ├── core/                  # Core RAG Logic
-│   │   ├── embeddings.py      # Embedding Models (Gemini, OpenAI, Local)
-│   │   ├── llm.py             # LLM API Callers & Local offline fallbacks
-│   │   ├── pdf.py             # PyMuPDF-based structural PDF parser
-│   │   ├── rag.py             # Grounded RAG Query Pipeline
-│   │   └── vector_store.py    # FAISS local vector store manager
-│   ├── ui/                    # UI Routers & static directories
-│   │   ├── static/            # Static assets
-│   │   │   ├── css/style.css  # Purple theme styles and layout configs
-│   │   │   ├── js/app.js      # SPA dashboard & navigation handlers
-│   │   │   └── index.html     # Main Single Page Application interface
-│   │   ├── chat.py            # Chat API endpoint
-│   │   ├── dashboard.py       # Statistics API endpoint
-│   │   └── documents.py       # PDF uploader, download, & metadata routers
-│   └── __init__.py            # FastAPI Application routes & settings config
-├── data/
-│   ├── benchmark/             # Local pre-downloaded legal PDF documents
-│   └── vector_stores/         # Local FAISS index files (.faiss & .pkl)
-├── evaluation/                # Test suites & evaluation benchmarks
-│   ├── evaluate.py            # Automated evaluation runner script
-│   ├── questions.json         # Reference evaluation golden dataset
-│   └── results.csv            # Evaluation statistics output
-├── scripts/                   # Data utility scripts
-│   ├── download_benchmark.py  # Benchmark PDF downloader tool
-│   └── generate_benchmark_excerpts.py
-├── .env                       # API Credentials (Excluded from git tracking)
-├── .gitignore                 # Secure Git patterns
-├── app.py                     # App execution entrypoint
-└── config.py                  # Global configurations and variables
-```
+│   ├── core/          # RAG pipeline
+│   ├── ui/            # Streamlit interface
+│   └── utils/
+├── corpus/            # Benchmark documents
+├── evaluation/        # Evaluation harness
+├── tests/
+├── requirements.txt
+└── README.md
 
 ---
 
-## 🛠️ Installation & Setup
+Run Locally
 
-### 1. Prerequisites
-Ensure you have Python 3.8+ installed on your system.
+git clone https://github.com/your-username/policylens.git
+cd policylens
 
-### 2. Clone the Repository
-```bash
-git clone https://github.com/Hamzaiftikhar01/PolicyLens.git
-cd PolicyLens
-```
+python -m venv venv
+venv\Scripts\activate       # Windows
 
-### 3. Install Dependencies
-Install all required libraries using `pip`:
-```bash
-pip install fastapi uvicorn requests pymupdf faiss-cpu numpy pydantic python-dotenv
-```
+pip install -r requirements.txt
 
-### 4. Configure Environment Variables
-Create a file named `.env` in the project root directory and define your API keys:
-```env
-GEMINI_API_KEY=YOUR_GEMINI_API_KEY
-OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-EMBEDDING_PROVIDER=gemini
-LLM_PROVIDER=gemini
-CHUNK_SIZE=1000
-CHUNK_OVERLAP=200
-```
+Create ".env":
+
+GROQ_API_KEY=your_groq_api_key
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+VECTOR_STORE_TYPE=faiss
+CHUNK_SIZE=800
+CHUNK_OVERLAP=150
+
+Run:
+
+streamlit run app.py
 
 ---
 
-## 🚦 How to Run the Application
+Known Limitations
 
-### 1. Start the Server
-Launch the FastAPI backend server using the main execution file:
-```bash
-python app.py
-```
-This will start the Uvicorn server locally at **[http://localhost:8000](http://localhost:8000)**.
+Current retrieval can struggle with:
 
-### 2. Open the Single Page Application (SPA)
-Open your web browser and navigate to:
-👉 **[http://localhost:8000](http://localhost:8000)**
+- Highly specific terminology
+- Multi-hop cross-document reasoning
+- Context split across legal subsections
+
+Planned improvements include hybrid BM25 + dense retrieval, reranking, and hierarchical legal chunking.
 
 ---
 
-## 🧪 Running the Evaluation Harness
-To execute the pre-configured legal benchmark queries and test the accuracy, latency, and groundedness of the RAG pipeline, run:
-```bash
-python evaluation/evaluate.py
-```
-The results and metrics analysis will be saved in `evaluation/results.csv` and `evaluation/report.md` automatically.
+Disclaimer
+
+PolicyLens is a document research tool, not legal advice. Always verify important legal information against current authoritative sources.
+
+---
+
+Assessment
+
+Built for the CodingAtom RAG Assessment.
+
+- [x] Custom RAG pipeline
+- [x] Document ingestion
+- [x] Retrieval & generation
+- [x] Citation grounding
+- [x] Custom document upload
+- [x] 20-case evaluation
+- [x] Failure analysis
+- [x] Public deployment
+
+Live: https://policylens-myg5.onrender.com/
+
+---
+
+License
+
+MIT License
