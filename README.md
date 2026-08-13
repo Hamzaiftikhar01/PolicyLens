@@ -1,16 +1,23 @@
+PolicyLens — Evidence-Grounded Document Intelligence
+
+""Live Demo" (https://img.shields.io/badge/Live%20Demo-Render-00C7B7?style=for-the-badge&logo=render&logoColor=white)" (https://policylens-myg5.onrender.com/)
+""Python" (https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)" (https://www.python.org/)
+""Streamlit" (https://img.shields.io/badge/Streamlit-App-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)" (https://streamlit.io/)
+""License" (https://img.shields.io/badge/License-MIT-green.svg)" (LICENSE)
+
 «PolicyLens is a citation-grounded RAG platform that answers questions from legal and user-provided documents using retrieved evidence instead of unsupported model knowledge.»
 
-🔗 "Live Demo" (https://policylens-myg5.onrender.com/)
+🔗 Live Demo: https://policylens-myg5.onrender.com/
 
 ---
 
-What is PolicyLens?
+Overview
 
-PolicyLens turns complex documents into a searchable AI knowledge base.
+PolicyLens transforms complex legal, regulatory, research, and policy documents into a searchable AI knowledge base.
 
 Question → Retrieve Evidence → Generate Answer → Verify Citation
 
-It is designed for legal, regulatory, research, and policy documents where traceability and grounded answers matter.
+The system focuses on grounded answers, source traceability, and safe failure handling.
 
 ---
 
@@ -19,13 +26,13 @@ Key Features
 - Dual RAG Modes
   
   - Benchmark Mode: Fixed Pakistani legal corpus for reproducible evaluation.
-  - Try Your Own: Upload PDFs and query them in an isolated temporary knowledge base.
+  - Try Your Own: Upload PDFs and query them using an isolated temporary knowledge base.
 
 - Evidence-Grounded Answers
-  Responses are generated from retrieved document context.
+  Answers are generated using retrieved document context.
 
 - Source Citations
-  Answers preserve document, page, section/article, and source metadata.
+  Citations preserve document, page, section/article, and source metadata.
 
 - Evidence Status
   
@@ -34,10 +41,10 @@ Key Features
   - 🔴 Insufficient Evidence
 
 - Failure Handling
-  Detects weak retrieval, missing evidence, unsupported questions, and API failures.
+  Handles weak retrieval, missing evidence, unsupported questions, and API failures.
 
-- Built-in Evaluation
-  Includes 20 ground-truth questions covering factual retrieval, multi-document queries, comparison, multi-hop reasoning, and unanswerable questions.
+- Evaluation Framework
+  Includes 20 ground-truth test cases covering factual retrieval, multi-document synthesis, comparison, multi-hop reasoning, and unanswerable questions.
 
 ---
 
@@ -59,20 +66,20 @@ LLM Generation
     ↓
 Grounded Answer + Citation
 
-Both Benchmark Mode and Try Your Own use the same RAG core; only the knowledge-base namespace changes.
+Both Benchmark Mode and Try Your Own use the same RAG core, with isolated knowledge-base namespaces.
 
 ---
 
 Benchmark Corpus
 
-The benchmark includes Pakistani legal and regulatory documents such as:
+The benchmark corpus contains Pakistani legal and regulatory documents including:
 
 - Constitution of Pakistan
 - Pakistan Penal Code
 - Code of Criminal Procedure
 - Code of Civil Procedure
 - Elections Act
-- PECA
+- Prevention of Electronic Crimes Act (PECA)
 - Right of Access to Information Act
 - Pakistan Code regulatory material
 
@@ -80,17 +87,17 @@ The benchmark includes Pakistani legal and regulatory documents such as:
 
 Evaluation
 
-Current benchmark results:
+PolicyLens is evaluated using 20 ground-truth questions.
 
 Metric| Result
 Retrieval Hit@5| 95.0%
 Groundedness| 96.5%
 Citation Accuracy| 98.0%
 Answer Relevance| 94.0%
-Avg. Latency| 1.84s
+Average Latency| 1.84s
 Test Cases| 20
 
-The evaluation suite is available in:
+Evaluation implementation:
 
 evaluation/
 ├── questions.json
@@ -116,24 +123,41 @@ policylens/
 │   ├── ui/            # Streamlit interface
 │   └── utils/
 ├── corpus/            # Benchmark documents
-├── evaluation/        # Evaluation harness
+├── evaluation/        # Evaluation framework
 ├── tests/
 ├── requirements.txt
 └── README.md
 
 ---
 
-Run Locally
+Installation
+
+1. Clone
 
 git clone https://github.com/your-username/policylens.git
 cd policylens
 
+2. Create Virtual Environment
+
+Windows:
+
 python -m venv venv
-venv\Scripts\activate       # Windows
+venv\Scripts\activate
+
+Linux/macOS:
+
+python -m venv venv
+source venv/bin/activate
+
+3. Install Dependencies
 
 pip install -r requirements.txt
 
-Create ".env":
+---
+
+Environment Variables
+
+Create a ".env" file:
 
 GROQ_API_KEY=your_groq_api_key
 EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
@@ -141,44 +165,67 @@ VECTOR_STORE_TYPE=faiss
 CHUNK_SIZE=800
 CHUNK_OVERLAP=150
 
-Run:
+---
+
+Run the Application
 
 streamlit run app.py
+
+The application will be available at:
+
+http://localhost:8501
+
+---
+
+Run Evaluation
+
+python evaluation/evaluate.py
+
+Run tests:
+
+pytest
 
 ---
 
 Known Limitations
 
-Current retrieval can struggle with:
+Current retrieval may struggle with:
 
 - Highly specific terminology
 - Multi-hop cross-document reasoning
 - Context split across legal subsections
 
-Planned improvements include hybrid BM25 + dense retrieval, reranking, and hierarchical legal chunking.
+Potential improvements include hybrid BM25 + dense retrieval, reranking, and hierarchical legal chunking.
 
 ---
 
-Disclaimer
-
-PolicyLens is a document research tool, not legal advice. Always verify important legal information against current authoritative sources.
-
----
-
-Assessment
+CodingAtom Assessment
 
 Built for the CodingAtom RAG Assessment.
 
 - [x] Custom RAG pipeline
 - [x] Document ingestion
-- [x] Retrieval & generation
-- [x] Citation grounding
+- [x] Vector retrieval
+- [x] Grounded generation
+- [x] Citation system
 - [x] Custom document upload
 - [x] 20-case evaluation
 - [x] Failure analysis
 - [x] Public deployment
 
-Live: https://policylens-myg5.onrender.com/
+---
+
+Live Demo
+
+https://policylens-myg5.onrender.com/
+
+---
+
+Disclaimer
+
+PolicyLens is a document research tool and does not provide legal advice.
+
+For important legal decisions, always verify information against current authoritative sources and official publications.
 
 ---
 
