@@ -1,79 +1,151 @@
-# PolicyLens
 
-### Evidence-Grounded Pakistan Legal & Document Intelligence
+# PolicyLens - Evidence-Grounded Pakistan Legal & Document Intelligence
 
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Render-00C7B7?style=for-the-badge&logo=render&logoColor=white)](https://policylens-myg5.onrender.com/)
-[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+PolicyLens is a production-oriented **Retrieval-Augmented Generation (RAG)** system for querying legal, regulatory, and user-provided documents. It retrieves relevant evidence, generates answers from that evidence, and exposes source metadata for verification.
 
-> **PolicyLens is an evidence-grounded RAG system that answers questions from legal, regulatory, and custom documents using retrieved evidence with traceable citations.**
-
-**Live Demo:** https://policylens-myg5.onrender.com/
+**Live Application:** https://policylens-myg5.onrender.com/
 
 ---
 
-## **Overview**
+## Overview
 
-PolicyLens transforms complex legal and policy documents into an **AI-powered research system**.
+Legal and regulatory documents contain large amounts of structured information that can be difficult to search and cross-reference.
 
-The core workflow is:
-
-**Question → Retrieve Evidence → Filter → Generate → Cite**
-
-The system is designed to provide **grounded answers instead of unsupported model knowledge**.
-
----
-
-## **Key Features**
-
-- **Dual RAG Modes**
-  - **Benchmark Mode:** Fixed Pakistani legal corpus for reproducible evaluation.
-  - **Try Your Own:** Upload PDFs and query them in an isolated knowledge base.
-
-- **Evidence-Grounded Answers**
-  - Answers are generated from **retrieved document context**.
-
-- **Traceable Citations**
-  - Preserves **document, page, article/section, and source metadata**.
-
-- **Evidence Status**
-  - 🟢 **Strong Evidence**
-  - 🟡 **Limited Evidence**
-  - 🔴 **Insufficient Evidence**
-
-- **Failure Handling**
-  - Handles **weak retrieval, missing evidence, unsupported questions, and API failures**.
-
----
-
-## **Architecture**
+PolicyLens provides an evidence-first workflow:
 
 ```text
-Documents
+User Query
     ↓
-PDF Extraction & Chunking
+Query Embedding
     ↓
-Embeddings
-    ↓
-FAISS Vector Store
-    ↓
-Query Retrieval
+Vector Retrieval
     ↓
 Evidence Filtering
     ↓
-LLM Generation
+Grounded Generation
     ↓
-Answer + Citation + Evidence Status
+Answer + Citations
 ````
 
-Both **Benchmark Mode** and **Try Your Own** use the **same RAG pipeline** with isolated document indexes.
+The system is designed around a simple principle:
+
+> **If the indexed evidence does not support an answer, the system should not present an unsupported conclusion.**
 
 ---
 
-## **Benchmark Corpus**
+## Core Capabilities
 
-The benchmark corpus includes:
+### Dual Knowledge Modes
+
+**Benchmark Mode**
+
+A fixed Pakistani legal corpus used for reproducible retrieval and evaluation.
+
+**Try Your Own**
+
+Users can upload custom PDF documents and query them through an isolated knowledge base without mixing them with the benchmark corpus.
+
+### Evidence-Grounded Generation
+
+The generation layer receives retrieved document context rather than relying solely on the model's general knowledge.
+
+### Source Traceability
+
+Retrieved chunks retain source metadata including:
+
+* Document title
+* Page number
+* Article / Section
+* Source information
+* Document metadata
+
+### Evidence Classification
+
+Responses are classified based on available retrieval evidence:
+
+* **Strong Evidence**
+* **Limited Evidence**
+* **Insufficient Evidence**
+
+### Failure Handling
+
+The system explicitly handles:
+
+* Low-relevance retrieval
+* Missing evidence
+* Unsupported questions
+* Conflicting provisions
+* Generation/API failures
+
+---
+
+## System Architecture
+
+```text
+                         PolicyLens
+                             |
+              +--------------+--------------+
+              |                             |
+       Benchmark Mode                 Try Your Own
+       Fixed Corpus                   User Documents
+              |                             |
+              +--------------+--------------+
+                             |
+                         RAG Core
+                             |
+        +--------------------+--------------------+
+        |                    |                    |
+    Ingestion            Retrieval           Generation
+        |                    |                    |
+    PDF Parsing          Embeddings          LLM Prompt
+    Chunking             Vector Search       Grounding
+    Metadata             Filtering           Citations
+        |                    |                    |
+        +--------------------+--------------------+
+                             |
+                    Grounded Response
+                    + Source Evidence
+```
+
+Both operating modes use the **same RAG core**, while maintaining separate document indexes.
+
+---
+
+## RAG Pipeline
+
+### 1. Document Processing
+
+PDF documents are extracted and converted into structured chunks while preserving available document metadata.
+
+### 2. Chunking
+
+Documents are divided into semantically meaningful chunks to improve retrieval quality and preserve relevant legal context.
+
+### 3. Embeddings
+
+Document chunks and user queries are converted into vector representations using a Sentence Transformers embedding model.
+
+### 4. Retrieval
+
+FAISS performs vector similarity search to identify the most relevant document chunks.
+
+### 5. Evidence Filtering
+
+Retrieved candidates are filtered based on relevance before being passed to the generation layer.
+
+### 6. Generation
+
+The LLM generates a response using the retrieved evidence and controlled grounding instructions.
+
+### 7. Citation Mapping
+
+Source metadata from retrieved chunks is mapped back into the final response for verification.
+
+---
+
+## Benchmark Corpus
+
+The benchmark corpus focuses on Pakistani legal and regulatory material, including:
 
 * **Constitution of Pakistan**
 * **Pakistan Penal Code, 1860**
@@ -84,11 +156,15 @@ The benchmark corpus includes:
 * **Right of Access to Information Act, 2017**
 * **Pakistan Code regulatory material**
 
+The benchmark corpus is kept separate from user-uploaded documents to preserve evaluation consistency.
+
 ---
 
-## **Evaluation**
+## Evaluation
 
-PolicyLens includes a **20-question evaluation suite** covering:
+PolicyLens includes an automated evaluation suite containing **20 ground-truth test cases**.
+
+The evaluation covers:
 
 * Direct factual retrieval
 * Multi-section retrieval
@@ -96,20 +172,31 @@ PolicyLens includes a **20-question evaluation suite** covering:
 * Comparative analysis
 * Multi-hop reasoning
 * Unanswerable questions
-* Conflicting provisions
+* Conflicting or ambiguous provisions
 
-### **Results**
+### Benchmark Results
 
-| **Metric**            | **Score** |
-| --------------------- | --------: |
-| **Retrieval Hit@5**   | **95.0%** |
-| **Groundedness**      | **96.5%** |
-| **Citation Accuracy** | **98.0%** |
-| **Answer Relevance**  | **94.0%** |
-| **Average Latency**   | **1.84s** |
-| **Evaluation Cases**  |    **20** |
+| Metric            |     Result |
+| ----------------- | ---------: |
+| Retrieval Hit@5   |  **95.0%** |
+| Groundedness      |  **96.5%** |
+| Citation Accuracy |  **98.0%** |
+| Answer Relevance  |  **94.0%** |
+| Average Latency   | **1.84 s** |
+| Evaluation Cases  |     **20** |
 
-Run the evaluation:
+Evaluation implementation:
+
+```text
+evaluation/
+├── questions.json
+├── evaluate.py
+├── metrics.py
+├── results.csv
+└── report.md
+```
+
+Run the evaluation suite with:
 
 ```bash
 python evaluation/evaluate.py
@@ -117,23 +204,41 @@ python evaluation/evaluate.py
 
 ---
 
-## **Tech Stack**
+## Failure Analysis
 
-**Backend:** FastAPI · Python
+Evaluation identified two important retrieval failure patterns.
 
-**RAG:** FAISS · Sentence Transformers
+### Terminology Mismatch
 
-**LLM:** Groq
+Highly specific legal terminology can occasionally retrieve semantically similar but incorrect provisions.
 
-**Document Processing:** PyMuPDF
+**Example:** Cybercrime terminology may retrieve broader criminal-law provisions instead of the relevant PECA section.
 
-**Testing:** Pytest
+**Potential improvement:** Hybrid BM25 + dense retrieval with Reciprocal Rank Fusion.
 
-**Deployment:** Render
+### Multi-Hop Legal Context
+
+A relevant provision may depend on another section or act that is not retrieved in the same context window.
+
+**Potential improvement:** Hierarchical retrieval with parent-section context and reranking.
 
 ---
 
-## **Project Structure**
+## Technology Stack
+
+| Layer               | Technology                |
+| ------------------- | ------------------------- |
+| Backend             | **FastAPI, Python**       |
+| Retrieval           | **FAISS**                 |
+| Embeddings          | **Sentence Transformers** |
+| LLM                 | **Groq**                  |
+| Document Processing | **PyMuPDF**               |
+| Testing             | **Pytest**                |
+| Deployment          | **Render**                |
+
+---
+
+## Project Structure
 
 ```text
 policylens/
@@ -145,6 +250,7 @@ policylens/
 │   │   └── generator.py
 │   ├── api/
 │   └── utils/
+│
 ├── corpus/
 ├── evaluation/
 ├── tests/
@@ -155,20 +261,24 @@ policylens/
 
 ---
 
-## **Installation**
+## Local Development
 
-### **1. Clone the Repository**
+### Prerequisites
+
+* Python 3.10+
+* Groq API key
+* Git
+
+### Installation
 
 ```bash
 git clone https://github.com/your-username/policylens.git
 cd policylens
-```
 
-### **2. Create Virtual Environment**
-
-```bash
 python -m venv venv
 ```
+
+Activate the environment.
 
 **Windows:**
 
@@ -182,15 +292,13 @@ venv\Scripts\activate
 source venv/bin/activate
 ```
 
-### **3. Install Dependencies**
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## **Environment Variables**
+### Environment Configuration
 
 Create a `.env` file:
 
@@ -202,15 +310,13 @@ CHUNK_SIZE=800
 CHUNK_OVERLAP=150
 ```
 
----
-
-## **Run the Application**
+### Start the API
 
 ```bash
 uvicorn app.main:app --reload
 ```
 
-API:
+The API will be available at:
 
 ```text
 http://127.0.0.1:8000
@@ -218,52 +324,63 @@ http://127.0.0.1:8000
 
 ---
 
-## **Known Limitations**
+## Current Limitations
 
-Current retrieval may struggle with:
+The current implementation can be improved in several areas:
 
-* **Highly specific terminology**
-* **Complex multi-hop legal reasoning**
-* **Context distributed across related sections**
+* Specific terminology retrieval
+* Multi-hop legal reasoning
+* Cross-document relationships
+* Context preservation across related sections
 
-Future improvements include **hybrid BM25 + dense retrieval, reranking, and hierarchical legal retrieval**.
-
----
-
-## **CodingAtom Assessment**
-
-Built for the **CodingAtom RAG Assessment**.
-
-* [x] **Custom document ingestion**
-* [x] **RAG retrieval pipeline**
-* [x] **Grounded generation**
-* [x] **Citation mapping**
-* [x] **Custom document mode**
-* [x] **20-case evaluation**
-* [x] **Failure analysis**
-* [x] **Public deployment**
+Planned retrieval improvements include **hybrid search, reranking, and hierarchical legal retrieval**.
 
 ---
 
-## **Live Demo**
+## Assessment
 
-**[https://policylens-myg5.onrender.com/](https://policylens-myg5.onrender.com/)**
+PolicyLens was developed for the **CodingAtom RAG Assessment**.
+
+### Task 1 — Retrieval Pipeline
+
+* Custom document ingestion
+* Semantic chunking
+* Vector retrieval
+* Evidence filtering
+* Grounded generation
+* Citation mapping
+* Failure handling
+
+### Task 2 — Evaluation
+
+* 20 ground-truth queries
+* Retrieval evaluation
+* Groundedness measurement
+* Citation accuracy
+* Answer relevance
+* Latency measurement
+* Failure analysis
+
+### Task 3 — Public Deployment
+
+**Live Application:**
+[https://policylens-myg5.onrender.com/](https://policylens-myg5.onrender.com/)
 
 ---
 
-## **Disclaimer**
+## Disclaimer
 
-**PolicyLens is an AI-powered document research tool and does not provide legal advice.**
+PolicyLens is an AI-powered document research system and **does not provide legal advice**.
 
-Always verify important legal information against **current authoritative legislation and official publications**.
+For legal, regulatory, or compliance decisions, information should be verified against the latest authoritative legislation, official publications, and qualified professionals.
 
 ---
 
-## **License**
+## License
 
-**MIT License**
+This project is licensed under the **MIT License**.
 
 ```
 
-**Important:** GitHub ke **Edit README** page mein is code ko paste karna hai. Preview mein `##` headings aur `**bold**` automatically rendered headings/bold ban jayenge.
+This is the version I'd actually use for the **CodingAtom submission**: technical enough for an evaluator, concise enough to read quickly, and focused on the things that demonstrate that you built a real RAG system rather than a chatbot.
 ```
